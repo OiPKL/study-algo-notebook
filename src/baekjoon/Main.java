@@ -57,204 +57,51 @@ public class Main {
 				break;
 			}
 
-			int position = getPosition(b0Now, b1Now, r0Now, r1Now);
-			switch (position) {
-				case 1: // R B R B
-				{
-					int[] redMoved = move(r0Now, r1Now, b0Now, b1Now, 0);
-					int[] blueMoved = move(b0Now, b1Now, -1, -1, 0);
-					pq.add(new int[] {blueMoved[0], blueMoved[1], redMoved[0], redMoved[1], cnt + 1});
+			for (int d = 0; d < 4; d++) {
+
+				int[] redMoved, blueMoved;
+				if (d == 0) {
+					if (r0Now < b0Now) {
+						redMoved = move(r0Now, r1Now, b0Now, b1Now, d);
+						blueMoved = move(b0Now, b1Now, redMoved[0], redMoved[1], d);
+					} else {
+						blueMoved = move(b0Now, b1Now, r0Now, r1Now, d);
+						redMoved = move(r0Now, r1Now, blueMoved[0], blueMoved[1], d);
+					}
+				} else if (d == 1) {
+					if (r0Now > b0Now) {
+						redMoved = move(r0Now, r1Now, b0Now, b1Now, d);
+						blueMoved = move(b0Now, b1Now, redMoved[0], redMoved[1], d);
+					} else {
+						blueMoved = move(b0Now, b1Now, r0Now, r1Now, d);
+						redMoved = move(r0Now, r1Now, blueMoved[0], blueMoved[1], d);
+					}
+				} else if (d == 2) {
+					if (r1Now < b1Now) {
+						redMoved = move(r0Now, r1Now, b0Now, b1Now, d);
+						blueMoved = move(b0Now, b1Now, redMoved[0], redMoved[1], d);
+					} else {
+						blueMoved = move(b0Now, b1Now, r0Now, r1Now, d);
+						redMoved = move(r0Now, r1Now, blueMoved[0], blueMoved[1], d);
+					}
+				} else {
+					if (r1Now > b1Now) {
+						redMoved = move(r0Now, r1Now, b0Now, b1Now, d);
+						blueMoved = move(b0Now, b1Now, redMoved[0], redMoved[1], d);
+					} else {
+						blueMoved = move(b0Now, b1Now, r0Now, r1Now, d);
+						redMoved = move(r0Now, r1Now, blueMoved[0], blueMoved[1], d);
+					}
 				}
-				{
-					int[] blueMoved = move(b0Now, b1Now, r0Now, r1Now, 1);
-					int[] redMoved = move(r0Now, r1Now, -1, -1, 1);
-					pq.add(new int[] {blueMoved[0], blueMoved[1], redMoved[0], redMoved[1], cnt + 1});
-				}
-				{
-					int[] redMoved = move(r0Now, r1Now, b0Now, b1Now, 2);
-					int[] blueMoved = move(b0Now, b1Now, -1, -1, 2);
-					pq.add(new int[] {blueMoved[0], blueMoved[1], redMoved[0], redMoved[1], cnt + 1});
-				}
-				{
-					int[] blueMoved = move(b0Now, b1Now, r0Now, r1Now, 3);
-					int[] redMoved = move(r0Now, r1Now, -1, -1, 3);
-					pq.add(new int[] {blueMoved[0], blueMoved[1], redMoved[0], redMoved[1], cnt + 1});
-				}
-				break;
-				case 2: // R B - -
-				{
-					int[] redMoved = move(r0Now, r1Now, b0Now, b1Now, 0);
-					int[] blueMoved = move(b0Now, b1Now, -1, -1, 0);
-					pq.add(new int[] {blueMoved[0], blueMoved[1], redMoved[0], redMoved[1], cnt + 1});
-				}
-				{
-					int[] blueMoved = move(b0Now, b1Now, r0Now, r1Now, 1);
-					int[] redMoved = move(r0Now, r1Now, -1, -1, 1);
-					pq.add(new int[] {blueMoved[0], blueMoved[1], redMoved[0], redMoved[1], cnt + 1});
-				}
-				{
-					int[] redMoved = move(r0Now, r1Now, b0Now, b1Now, 2);
-					int[] blueMoved = move(b0Now, b1Now, -1, -1, 2);
-					pq.add(new int[] {blueMoved[0], blueMoved[1], redMoved[0], redMoved[1], cnt + 1});
-				}
-				{
-					int[] redMoved = move(r0Now, r1Now, b0Now, b1Now, 3);
-					int[] blueMoved = move(b0Now, b1Now, -1, -1, 3);
-					pq.add(new int[] {blueMoved[0], blueMoved[1], redMoved[0], redMoved[1], cnt + 1});
-				}
-				break;
-				case 3: // R B B R
-				{
-					int[] redMoved = move(r0Now, r1Now, b0Now, b1Now, 0);
-					int[] blueMoved = move(b0Now, b1Now, -1, -1, 0);
-					pq.add(new int[] {blueMoved[0], blueMoved[1], redMoved[0], redMoved[1], cnt + 1});
-				}
-				{
-					int[] blueMoved = move(b0Now, b1Now, r0Now, r1Now, 1);
-					int[] redMoved = move(r0Now, r1Now, -1, -1, 1);
-					pq.add(new int[] {blueMoved[0], blueMoved[1], redMoved[0], redMoved[1], cnt + 1});
-				}
-				{
-					int[] blueMoved = move(b0Now, b1Now, r0Now, r1Now, 2);
-					int[] redMoved = move(r0Now, r1Now, -1, -1, 2);
-					pq.add(new int[] {blueMoved[0], blueMoved[1], redMoved[0], redMoved[1], cnt + 1});
-				}
-				{
-					int[] redMoved = move(r0Now, r1Now, b0Now, b1Now, 3);
-					int[] blueMoved = move(b0Now, b1Now, -1, -1, 3);
-					pq.add(new int[] {blueMoved[0], blueMoved[1], redMoved[0], redMoved[1], cnt + 1});
-				}
-				break;
-				case 4: // - - R B
-				{
-					int[] redMoved = move(r0Now, r1Now, b0Now, b1Now, 0);
-					int[] blueMoved = move(b0Now, b1Now, -1, -1, 0);
-					pq.add(new int[]{blueMoved[0], blueMoved[1], redMoved[0], redMoved[1], cnt + 1});
-				}
-				{
-					int[] redMoved = move(r0Now, r1Now, b0Now, b1Now, 1);
-					int[] blueMoved = move(b0Now, b1Now, -1, -1, 1);
-					pq.add(new int[] {blueMoved[0], blueMoved[1], redMoved[0], redMoved[1], cnt + 1});
-				}
-				{
-					int[] redMoved = move(r0Now, r1Now, b0Now, b1Now, 2);
-					int[] blueMoved = move(b0Now, b1Now, -1, -1, 2);
-					pq.add(new int[] {blueMoved[0], blueMoved[1], redMoved[0], redMoved[1], cnt + 1});
-				}
-				{
-					int[] blueMoved = move(b0Now, b1Now, r0Now, r1Now, 3);
-					int[] redMoved = move(r0Now, r1Now, -1, -1, 3);
-					pq.add(new int[] {blueMoved[0], blueMoved[1], redMoved[0], redMoved[1], cnt + 1});
-				}
-				break;
-				case 6: // - - B R
-				{
-					int[] redMoved = move(r0Now, r1Now, b0Now, b1Now, 0);
-					int[] blueMoved = move(b0Now, b1Now, -1, -1, 0);
-					pq.add(new int[] {blueMoved[0], blueMoved[1], redMoved[0], redMoved[1], cnt + 1});
-				}
-				{
-					int[] redMoved = move(r0Now, r1Now, b0Now, b1Now, 1);
-					int[] blueMoved = move(b0Now, b1Now, -1, -1, 1);
-					pq.add(new int[] {blueMoved[0], blueMoved[1], redMoved[0], redMoved[1], cnt + 1});
-				}
-				{
-					int[] blueMoved = move(b0Now, b1Now, r0Now, r1Now, 2);
-					int[] redMoved = move(r0Now, r1Now, -1, -1, 2);
-					pq.add(new int[] {blueMoved[0], blueMoved[1], redMoved[0], redMoved[1], cnt + 1});
-				}
-				{
-					int[] redMoved = move(r0Now, r1Now, b0Now, b1Now, 3);
-					int[] blueMoved = move(b0Now, b1Now, -1, -1, 3);
-					pq.add(new int[] {blueMoved[0], blueMoved[1], redMoved[0], redMoved[1], cnt + 1});
-				}
-				break;
-				case 7: // B R R B
-				{
-					int[] blueMoved = move(b0Now, b1Now, r0Now, r1Now, 0);
-					int[] redMoved = move(r0Now, r1Now, -1, -1, 0);
-					pq.add(new int[] {blueMoved[0], blueMoved[1], redMoved[0], redMoved[1], cnt + 1});
-				}
-				{
-					int[] redMoved = move(r0Now, r1Now, b0Now, b1Now, 1);
-					int[] blueMoved = move(b0Now, b1Now, -1, -1, 1);
-					pq.add(new int[] {blueMoved[0], blueMoved[1], redMoved[0], redMoved[1], cnt + 1});
-				}
-				{
-					int[] redMoved = move(r0Now, r1Now, b0Now, b1Now, 2);
-					int[] blueMoved = move(b0Now, b1Now, -1, -1, 2);
-					pq.add(new int[] {blueMoved[0], blueMoved[1], redMoved[0], redMoved[1], cnt + 1});
-				}
-				{
-					int[] blueMoved = move(b0Now, b1Now, r0Now, r1Now, 3);
-					int[] redMoved = move(r0Now, r1Now, -1, -1, 3);
-					pq.add(new int[] {blueMoved[0], blueMoved[1], redMoved[0], redMoved[1], cnt + 1});
-				}
-				break;
-				case 8: // B R - -
-				{
-					int[] blueMoved = move(b0Now, b1Now, r0Now, r1Now, 0);
-					int[] redMoved = move(r0Now, r1Now, -1, -1, 0);
-					pq.add(new int[] {blueMoved[0], blueMoved[1], redMoved[0], redMoved[1], cnt + 1});
-				}
-				{
-					int[] redMoved = move(r0Now, r1Now, b0Now, b1Now, 1);
-					int[] blueMoved = move(b0Now, b1Now, -1, -1, 1);
-					pq.add(new int[] {blueMoved[0], blueMoved[1], redMoved[0], redMoved[1], cnt + 1});
-				}
-				{
-					int[] redMoved = move(r0Now, r1Now, b0Now, b1Now, 2);
-					int[] blueMoved = move(b0Now, b1Now, -1, -1, 2);
-					pq.add(new int[] {blueMoved[0], blueMoved[1], redMoved[0], redMoved[1], cnt + 1});
-				}
-				{
-					int[] redMoved = move(r0Now, r1Now, b0Now, b1Now, 3);
-					int[] blueMoved = move(b0Now, b1Now, -1, -1, 3);
-					pq.add(new int[] {blueMoved[0], blueMoved[1], redMoved[0], redMoved[1], cnt + 1});
-				}
-				break;
-				case 9: // B R B R
-				{
-					int[] blueMoved = move(b0Now, b1Now, r0Now, r1Now, 0);
-					int[] redMoved = move(r0Now, r1Now, -1, -1, 0);
-					pq.add(new int[] {blueMoved[0], blueMoved[1], redMoved[0], redMoved[1], cnt + 1});
-				}
-				{
-					int[] redMoved = move(r0Now, r1Now, b0Now, b1Now, 1);
-					int[] blueMoved = move(b0Now, b1Now, -1, -1, 1);
-					pq.add(new int[] {blueMoved[0], blueMoved[1], redMoved[0], redMoved[1], cnt + 1});
-				}
-				{
-					int[] blueMoved = move(b0Now, b1Now, r0Now, r1Now, 2);
-					int[] redMoved = move(r0Now, r1Now, -1, -1, 2);
-					pq.add(new int[] {blueMoved[0], blueMoved[1], redMoved[0], redMoved[1], cnt + 1});
-				}
-				{
-					int[] redMoved = move(r0Now, r1Now, b0Now, b1Now, 3);
-					int[] blueMoved = move(b0Now, b1Now, -1, -1, 3);
-					pq.add(new int[] {blueMoved[0], blueMoved[1], redMoved[0], redMoved[1], cnt + 1});
-				}
-				break;
+
+				if (blueMoved[0] == O[0] && blueMoved[1] == O[1])
+					continue;
+
+				pq.add(new int[] {blueMoved[0], blueMoved[1], redMoved[0], redMoved[1], cnt + 1});
 			}
 		}
 
 		System.out.println(answer);
-	}
-
-	static int getPosition(int B0, int B1, int R0, int R1) {
-
-		if (B0 < R0) {
-			if (B1 < R1) 		return 1;
-			else if (B1 == R1) 	return 2;
-			else 				return 3;
-		} else if (B0 == R0) {
-			if (B1 < R1) 		return 4;
-			else                return 6;
-		} else {
-			if (B1 < R1) 		return 7;
-			else if (B1 == R1) 	return 8;
-			else 				return 9;
-		}
 	}
 
 	static int[] move(int f0, int f1, int l0, int l1, int d) {
@@ -264,8 +111,14 @@ public class Main {
 			int nf0 = f0 + dn[d];
 			int nf1 = f1 + dm[d];
 
-			if (map[nf0][nf1] != '.' || nf0 == l0 && nf1 == l1)
+			if (map[nf0][nf1] == '#' || ((nf0 == l0 && nf1 == l1) && !(l0 == O[0] && l1 == O[1])))
 				break;
+
+			if (map[nf0][nf1] == 'O') {
+				f0 = nf0;
+				f1 = nf1;
+				break;
+			}
 
 			f0 = nf0;
 			f1 = nf1;
