@@ -3,75 +3,79 @@ package baekjoon;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.PriorityQueue;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.StringTokenizer;
 
 public class Main {
 
-	static int[] dn = {-1, 0, 1, 0};
-	static int[] dm = {0, 1, 0, -1};
+	static int[] dn = {-1, 1, 0, 0};
+	static int[] dm = {0, 0, -1, 1};
+
+	static int N, M, K, time = -1;
+	static int[][] map, sharkNM;
+	static int[][][] sharkPQ;
+	static HashSet<Integer> sharkList;
 
 	public static void main(String[] args) throws IOException {
 
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-		StringBuilder sb = new StringBuilder();
-		StringTokenizer st;
+		StringTokenizer st = new StringTokenizer(br.readLine());
 
-		int TC = 1;
-		while (true) {
+		N = Integer.parseInt(st.nextToken());
+		M = Integer.parseInt(st.nextToken());
+		K = Integer.parseInt(st.nextToken());
 
-			int N = Integer.parseInt(br.readLine());
+		map = new int[N][N];
+		sharkNM = new int[M + 1][3];
+		sharkPQ = new int[M + 1][4][4];
+		sharkList = new HashSet<>();
 
-			if (N == 0) break;
+		/*
+		map			냄새
+		sharkNM		상어 | n, m, d
+		sharkPQ		상어 | 방향 | 우선순위
+		sharkList	생존상어
+		sharkDelete	삭제상어
+		sharkCheck	삭제체크
+		 */
+		
+		// HashMap<mapKey, time>[M+1] 추가 필요
 
-			int[][] map = new int[N][N];
-			for (int n = 0; n < N; n++) {
-				st = new StringTokenizer(br.readLine());
-				for (int m = 0; m < N; m++)
-					map[n][m] = Integer.parseInt(st.nextToken());
-			}
-
-			int[][] visited = new int[N][N];
-			for (int n = 0; n < N; n++)
-				for (int m = 0; m < N; m++)
-					visited[n][m] = Integer.MAX_VALUE;
-
-			PriorityQueue<int[]> pq = new PriorityQueue<>((a, b) -> a[2] - b[2]);
-			pq.add(new int[] {0, 0, map[0][0]});
-			visited[0][0] = map[0][0];
-
-			while (!pq.isEmpty()) {
-
-				int[] now = pq.poll();
-				int nNow = now[0];
-				int mNow =now[1];
-				int rpNow = Math.min(now[2], visited[nNow][mNow]);
-
-//				System.out.println(nNow + " | " + mNow + " | " + rpNow);
-
-				if (nNow == N - 1 && mNow == N - 1) {
-					sb.append("Problem ").append(TC++).append(": ").append(rpNow).append("\n");
-					break;
-				}
-
-				for (int d = 0; d < 4; d++) {
-
-					int nNext = nNow + dn[d];
-					int mNext = mNow + dm[d];
-
-					if (nNext < 0 || N <= nNext || mNext < 0 || N <= mNext)
-						continue;
-
-					int rpNext = rpNow + map[nNext][mNext];
-
-					if (rpNext < visited[nNext][mNext]) {
-						visited[nNext][mNext] = rpNext;
-						pq.add(new int[]{nNext, mNext, visited[nNext][mNext]});
-					}
+		for (int n1 = 0; n1 < N; n1++) {
+			st = new StringTokenizer(br.readLine());
+			for (int n2 = 0; n2 < N; n2++) {
+				int num = Integer.parseInt(st.nextToken());
+				sharkList.add(num);
+				if (num != 0) {
+					sharkNM[num][0] = n1;
+					sharkNM[num][1] = n2;
 				}
 			}
 		}
 
-		System.out.println(sb);
+		st = new StringTokenizer(br.readLine());
+		for (int m = 1; m <= M; m++)
+			sharkNM[m][2] = Integer.parseInt(st.nextToken());
+
+		for (int m = 1; m <= M; m++) {
+			for (int d1 = 0; d1 < 4; d1++) {
+				st = new StringTokenizer(br.readLine());
+				for (int d2 = 0; d2 < 4; d2++)
+					sharkPQ[m][d1][d2] = Integer.parseInt(st.nextToken());
+			}
+		}
+
+		for (int t = 1; t <= 1000; t++) {
+
+			HashSet<Integer> sharkDelete = new HashSet<>();
+			HashMap<Integer, Integer> sharkCheck = new HashMap<>();
+
+			for (int shark : sharkList) {
+
+			}
+		}
+
+		System.out.println(time);
 	}
 }
